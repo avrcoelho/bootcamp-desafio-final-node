@@ -21,6 +21,7 @@ module.exports = async (req, res, next) => {
 
     // toda rota que usar esse mddleware vai ter acesso ao userId
     req.userId = decoded.id
+    req.userType = decoded.type
 
     return next()
   } catch (err) {

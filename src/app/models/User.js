@@ -75,11 +75,12 @@ UserSchema.methods = {
 // ele vai ser disarado através do model user, não de uma isntacia do
 // statics não possui acesso ao this
 UserSchema.statics = {
-  generateToken ({ id }) {
+  generateToken ({ id, type }) {
     // GoNode03: é a security para que esse token não seja usado em outro lugar
     return jwt.sign(
       {
-        id
+        id,
+        type
       },
       authConfig.secret,
       {
