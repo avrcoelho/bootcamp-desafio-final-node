@@ -8,8 +8,22 @@ const ProductSchema = new mongoose.Schema(
     },
     type: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Type'
+        code: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Type'
+        },
+        size: [
+          {
+            code: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: 'Size'
+            },
+            price: {
+              type: Number,
+              required: true
+            }
+          }
+        ]
       }
     ]
   },

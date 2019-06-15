@@ -24,6 +24,7 @@ routes.post(
 
 routes.use(authMiddleware)
 
+// sizes
 routes.get('/sizes', handle(controllers.SizeController.index))
 routes.get('/sizes/:id', handle(controllers.SizeController.show))
 routes.post(
@@ -37,5 +38,35 @@ routes.put(
   handle(controllers.SizeController.update)
 )
 routes.delete('/sizes', handle(controllers.SizeController.destroy))
+
+// types
+routes.get('/types', handle(controllers.TypeController.index))
+routes.get('/types/:id', handle(controllers.TypeController.show))
+routes.post(
+  '/types',
+  validate(validators.Type),
+  handle(controllers.TypeController.store)
+)
+routes.put(
+  '/types',
+  validate(validators.Type),
+  handle(controllers.TypeController.update)
+)
+routes.delete('/types', handle(controllers.TypeController.destroy))
+
+// Products
+routes.get('/products', handle(controllers.ProductController.index))
+routes.get('/products/:id', handle(controllers.ProductController.show))
+routes.post(
+  '/products',
+  validate(validators.Product),
+  handle(controllers.ProductController.store)
+)
+routes.put(
+  '/products',
+  validate(validators.Product),
+  handle(controllers.ProductController.update)
+)
+routes.delete('/products', handle(controllers.ProductController.destroy))
 
 module.exports = routes

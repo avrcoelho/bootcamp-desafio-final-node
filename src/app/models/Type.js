@@ -5,13 +5,7 @@ const TypeSchema = new mongoose.Schema(
     type: {
       type: String,
       required: true
-    },
-    size: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Size'
-      }
-    ]
+    }
   },
   {
     // cria o created e o updated em cada registro da tabela
