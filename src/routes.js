@@ -25,34 +25,17 @@ routes.post(
 routes.use(authMiddleware)
 
 // sizes
-routes.get('/sizes', handle(controllers.SizeController.index))
-routes.get('/sizes/:id', handle(controllers.SizeController.show))
 routes.post(
-  '/sizes',
+  '/products/:id/types/:type/sizes',
   validate(validators.Size),
   handle(controllers.SizeController.store)
 )
-routes.put(
-  '/sizes',
-  validate(validators.Size),
-  handle(controllers.SizeController.update)
-)
-routes.delete('/sizes', handle(controllers.SizeController.destroy))
-
 // types
-routes.get('/types', handle(controllers.TypeController.index))
-routes.get('/types/:id', handle(controllers.TypeController.show))
 routes.post(
-  '/types',
+  '/products/:id/types',
   validate(validators.Type),
   handle(controllers.TypeController.store)
 )
-routes.put(
-  '/types',
-  validate(validators.Type),
-  handle(controllers.TypeController.update)
-)
-routes.delete('/types', handle(controllers.TypeController.destroy))
 
 // Products
 routes.get('/products', handle(controllers.ProductController.index))

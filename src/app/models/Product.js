@@ -6,15 +6,15 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    type: [
+    types: [
       {
-        code: {
+        type: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Type'
         },
-        size: [
+        sizes: [
           {
-            code: {
+            size: {
               type: mongoose.Schema.Types.ObjectId,
               ref: 'Size'
             },

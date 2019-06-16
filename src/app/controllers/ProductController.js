@@ -19,14 +19,14 @@ class ProductController {
   }
 
   async store (req, res) {
-    const { product } = req.body
+    const { name } = req.body
 
     // verifica se é administrador
     if (req.userType !== 1) {
       return res.status(403).json({ error: 'User not permission' })
     }
 
-    if (await Product.findOne({ product })) {
+    if (await Product.findOne({ name })) {
       return res.status(400).json({
         error: 'product already exists'
       })
