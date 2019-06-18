@@ -36,7 +36,8 @@ class ProductController {
       })
     }
 
-    const data = await Product.create(req.body)
+    const data = await Product.create({ ...req.body,
+      image: req.file.key })
 
     return res.json(data)
   }

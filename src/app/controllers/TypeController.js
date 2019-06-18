@@ -9,9 +9,10 @@ class TypeController {
     }
 
     const product = await Product.findById(req.params.id)
-    const dataType = await Type.create(req.body)
+    const dataType = await Type.create({ ...req.body,
+      image: req.file.key })
 
-    product.types.push({ type: dataType._id })
+    product.types.push(dataType._id)
 
     await product.save()
 

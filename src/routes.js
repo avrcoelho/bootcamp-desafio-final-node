@@ -1,5 +1,7 @@
 const express = require('express')
 const validate = require('express-validation')
+const multer = require('multer')
+const multerConfig = require('./config/multer')
 // pegar os erros que acontecem nas promises e enviar para dentro do exception handler
 // envolva as chamadas de controler com o hendleh
 const handle = require('express-async-handler')
@@ -27,12 +29,14 @@ routes.use(authMiddleware)
 // sizes
 routes.post(
   '/types/:id/sizes',
+  multer(multerConfig).single('image'),
   validate(validators.Size),
   handle(controllers.SizeController.store)
 )
 // types
 routes.post(
   '/products/:id/types',
+  multer(multerConfig).single('image'),
   validate(validators.Type),
   handle(controllers.TypeController.store)
 )
@@ -42,6 +46,7 @@ routes.get('/products', handle(controllers.ProductController.index))
 routes.get('/products/:id', handle(controllers.ProductController.show))
 routes.post(
   '/products',
+  multer(multerConfig).single('image'),
   validate(validators.Product),
   handle(controllers.ProductController.store)
 )

@@ -9,7 +9,8 @@ class SizeController {
     }
 
     const type = await Type.findById(req.params.id)
-    const dataSize = await Size.create(req.body)
+    const dataSize = await Size.create({ ...req.body,
+      image: req.file.key })
 
     type.sizes.push(dataSize._id)
 
