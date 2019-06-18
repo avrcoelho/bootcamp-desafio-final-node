@@ -17,7 +17,7 @@ const OrderSchema = new mongoose.Schema(
       ref: 'User'
     },
     observation: {
-      type: Number
+      type: String
     },
     products: [{
       nmae: {
