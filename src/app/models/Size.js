@@ -1,9 +1,16 @@
 const mongoose = require('mongoose')
-const mongoosePaginate = require('mongoose-paginate')
 
 const SizeSchema = new mongoose.Schema(
   {
     size: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+    image: {
       type: String,
       required: true
     }
@@ -13,7 +20,5 @@ const SizeSchema = new mongoose.Schema(
     timestamps: true
   }
 )
-
-SizeSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Size', SizeSchema)

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate')
 
 const ProductSchema = new mongoose.Schema(
   {
@@ -6,24 +7,14 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    image: {
+      type: String,
+      required: true
+    },
     types: [
       {
-        type: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Type'
-        },
-        sizes: [
-          {
-            size: {
-              type: mongoose.Schema.Types.ObjectId,
-              ref: 'Size'
-            },
-            price: {
-              type: Number,
-              required: true
-            }
-          }
-        ]
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Type'
       }
     ]
   },
@@ -32,5 +23,7 @@ const ProductSchema = new mongoose.Schema(
     timestamps: true
   }
 )
+
+ProductSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Product', ProductSchema)

@@ -15,7 +15,21 @@ const OrderSchema = new mongoose.Schema(
     customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
-    }
+    },
+    products: [{
+      nmae: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+      },
+      type: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Type'
+      },
+      size: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Size'
+      }
+    }]
   },
   {
     // cria o created e o updated em cada registro da tabela

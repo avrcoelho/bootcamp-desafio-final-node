@@ -1,5 +1,5 @@
 const Size = require('../models/Size')
-const Product = require('../models/Product')
+const Type = require('../models/Type')
 
 class SizeController {
   async store (req, res) {
@@ -8,14 +8,12 @@ class SizeController {
       return res.status(403).json({ error: 'User not permission' })
     }
 
-    const product = await Product.findById(req.params.id)
+    const type = await Type.findById(req.params.id)
     const dataSize = await Size.create(req.body)
 
-    product.types
-      .find(type => type.type === req.params.type)
-      .sizes.push({ size: dataSize._id })
+    type.sizes.push(dataSize._id)
 
-    await product.save()
+    await type.save()
 
     return res.json(dataSize)
   }

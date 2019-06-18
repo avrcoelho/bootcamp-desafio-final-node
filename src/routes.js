@@ -26,7 +26,7 @@ routes.use(authMiddleware)
 
 // sizes
 routes.post(
-  '/products/:id/types/:type/sizes',
+  '/types/:id/sizes',
   validate(validators.Size),
   handle(controllers.SizeController.store)
 )
