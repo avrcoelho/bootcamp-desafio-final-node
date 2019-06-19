@@ -55,6 +55,10 @@ routes.put(
   validate(validators.Product),
   handle(controllers.ProductController.update)
 )
-routes.delete('/products', handle(controllers.ProductController.destroy))
+
+// Products
+routes.get('/orders', handle(controllers.OrderController.index))
+routes.post('/orders', handle(controllers.OrderController.store))
+routes.put('/orders/:id', handle(controllers.OrderController.update))
 
 module.exports = routes
