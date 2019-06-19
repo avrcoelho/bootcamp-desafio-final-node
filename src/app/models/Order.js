@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate')
+const autoIncrement = require('mongoose-sequence')(mongoose)
 
 const OrderSchema = new mongoose.Schema(
   {
-    code: {
-      type: Number,
-      required: true
+    order: {
+      type: Number
     },
     total: {
       type: Number,
@@ -46,5 +46,6 @@ const OrderSchema = new mongoose.Schema(
 )
 
 OrderSchema.plugin(mongoosePaginate)
+OrderSchema.plugin(autoIncrement, { id: 'order_seq', inc_field: 'order' })
 
 module.exports = mongoose.model('Order', OrderSchema)
