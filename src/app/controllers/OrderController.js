@@ -29,7 +29,13 @@ class OrderController {
             path: 'items.size',
             select: ['size']
           }
-        ]
+        ],
+        options: {
+          // ordena os registros decrecente
+          short: {
+            createAt: -1
+          }
+        }
       }
     )
 
