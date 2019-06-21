@@ -2,6 +2,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const cors = require('cors')
 const mongoose = require('mongoose')
 const validate = require('express-validation')
 const Youch = require('youch')
@@ -37,6 +38,7 @@ class App {
   middlewares () {
     this.express.use(express.json())
     this.express.use(Sentry.Handlers.requestHandler())
+    this.express.use(cors())
   }
 
   routes () {
