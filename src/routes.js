@@ -24,11 +24,16 @@ routes.post(
   handle(controllers.SessionController.store)
 )
 
-routes.use(authMiddleware)
+routes.get(
+  '/sessions',
+  authMiddleware,
+  handle(controllers.SessionController.show)
+)
 
 // sizes
 routes.post(
   '/types/:id/sizes',
+  authMiddleware,
   multer(multerConfig).single('image'),
   validate(validators.Size),
   handle(controllers.SizeController.store)
@@ -36,29 +41,48 @@ routes.post(
 // types
 routes.post(
   '/products/:id/types',
+  authMiddleware,
   multer(multerConfig).single('image'),
   validate(validators.Type),
   handle(controllers.TypeController.store)
 )
 
 // Products
-routes.get('/products', handle(controllers.ProductController.index))
-routes.get('/products/:id', handle(controllers.ProductController.show))
+routes.get(
+  '/products',
+  authMiddleware,
+  handle(controllers.ProductController.index)
+)
+routes.get(
+  '/products/:id',
+  authMiddleware,
+  handle(controllers.ProductController.show)
+)
 routes.post(
   '/products',
+  authMiddleware,
   multer(multerConfig).single('image'),
   validate(validators.Product),
   handle(controllers.ProductController.store)
 )
 routes.put(
   '/products',
+  authMiddleware,
   validate(validators.Product),
   handle(controllers.ProductController.update)
 )
 
 // Products
-routes.get('/orders', handle(controllers.OrderController.index))
-routes.post('/orders', handle(controllers.OrderController.store))
-routes.put('/orders/:id', handle(controllers.OrderController.update))
+routes.get('/orders', authMiddleware, handle(controllers.OrderController.index))
+routes.post(
+  '/orders',
+  authMiddleware,
+  handle(controllers.OrderController.store)
+)
+routes.put(
+  '/orders/:id',
+  authMiddleware,
+  handle(controllers.OrderController.update)
+)
 
 module.exports = routes

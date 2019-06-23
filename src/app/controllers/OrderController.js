@@ -3,11 +3,11 @@ const Order = require('../models/Order')
 class OrderController {
   async index (req, res) {
     // verifica se é administrador
-    if (req.userType !== 1) {
-      return res.status(403).json({ error: 'User not permission' })
-    }
+    // if (req.userType !== 1) {
+    //   return res.status(403).json({ error: 'User not permission' })
+    // }
 
-    const products = await Order.paginate(
+    const orders = await Order.paginate(
       {},
       {
         page: req.query.page || 1,
@@ -19,11 +19,11 @@ class OrderController {
           },
           {
             path: 'items.product',
-            select: ['name']
+            select: ['name', 'image']
           },
           {
             path: 'items.type',
-            select: ['type']
+            select: ['type', 'image']
           },
           {
             path: 'items.size',
@@ -31,21 +31,28 @@ class OrderController {
           }
         ],
         options: {
-          // ordena os registros decrecente
-          short: {
-            createAt: -1
+          sort: {
+            order: 1
           }
         }
       }
     )
 
-    return res.json(products)
+    return res.json(orders)
   }
 
   async store (req, res) {
-    const data = await Order.create({ ...req.body, customer: req.userId })
+    let order = await Order.create({ ...req.body, customer: req.userId })
 
-    return res.json(data)
+    order = await Order.findById(order._id)
+      .populate('customer', 'name')
+      .populate('items.product', 'name')
+      .populate('items.type', 'type image')
+      .populate('items.size', 'size')
+
+    req.io.sockets.in('orders').emit('order', order)
+
+    return res.json(order)
   }
 
   async update (req, res) {

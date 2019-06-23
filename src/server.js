@@ -2,7 +2,9 @@
 require('dotenv').config()
 
 const express = require('express')
+const io = require('socket.io')()
 const cors = require('cors')
+const path = require('path')
 const mongoose = require('mongoose')
 const validate = require('express-validation')
 const Youch = require('youch')
@@ -14,6 +16,9 @@ const sentryConfig = require('./config/sentry')
 class App {
   constructor () {
     this.express = express()
+
+    this.server = require('http').Server(this.express)
+
     // verifica se é dev ou prod
     this.isDev = process.env.NODE_ENV !== 'production'
 
@@ -36,9 +41,27 @@ class App {
   }
 
   middlewares () {
+    const io = require('socket.io')(this.server)
+
+    io.on('connection', socket => {
+      socket.on('connectOrder', order => {
+        socket.join(order)
+      })
+    })
+
     this.express.use(express.json())
     this.express.use(Sentry.Handlers.requestHandler())
     this.express.use(cors())
+    this.express.use(
+      '/images',
+      express.static(path.resolve(__dirname, '..', 'tmp'))
+    )
+
+    this.express.use((req, res, next) => {
+      req.io = io
+
+      return next()
+    })
   }
 
   routes () {
@@ -72,4 +95,4 @@ class App {
 }
 
 // só vai precisar passar o express para ser usado em outros arquivos
-module.exports = new App().express
+module.exports = new App().server
