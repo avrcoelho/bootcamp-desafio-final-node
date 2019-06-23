@@ -26,18 +26,6 @@ class SessionController {
       token: User.generateToken(user)
     })
   }
-
-  async show (req, res) {
-    const id = req.userId
-
-    const user = await User.findById(id)
-
-    return res.json({
-      name: user.name,
-      type: user.type,
-      token: User.generateToken(user)
-    })
-  }
 }
 
 module.exports = new SessionController()

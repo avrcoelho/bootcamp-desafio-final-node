@@ -3,40 +3,15 @@ const Order = require('../models/Order')
 class OrderController {
   async index (req, res) {
     // verifica se é administrador
-    // if (req.userType !== 1) {
-    //   return res.status(403).json({ error: 'User not permission' })
-    // }
+    if (req.userType !== 1) {
+      return res.status(403).json({ error: 'User not permission' })
+    }
 
-    const orders = await Order.paginate(
-      {},
-      {
-        page: req.query.page || 1,
-        limit: 20,
-        populate: [
-          {
-            path: 'customer',
-            select: ['name']
-          },
-          {
-            path: 'items.product',
-            select: ['name', 'image']
-          },
-          {
-            path: 'items.type',
-            select: ['type', 'image']
-          },
-          {
-            path: 'items.size',
-            select: ['size']
-          }
-        ],
-        options: {
-          sort: {
-            order: 1
-          }
-        }
-      }
-    )
+    const orders = await Order.find({})
+      .populate('customer', 'name')
+      .populate('items.product', 'name')
+      .populate('items.type', 'type image')
+      .populate('items.size', 'size')
 
     return res.json(orders)
   }

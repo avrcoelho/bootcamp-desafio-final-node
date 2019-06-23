@@ -2,8 +2,9 @@
 require('dotenv').config()
 
 const express = require('express')
-const io = require('socket.io')()
 const cors = require('cors')
+const http = require('http')
+const io = require('socket.io')
 const path = require('path')
 const mongoose = require('mongoose')
 const validate = require('express-validation')
@@ -17,7 +18,8 @@ class App {
   constructor () {
     this.express = express()
 
-    this.server = require('http').Server(this.express)
+    this.server = http.Server(this.express)
+    this.io = io(this.server)
 
     // verifica se é dev ou prod
     this.isDev = process.env.NODE_ENV !== 'production'
@@ -41,9 +43,7 @@ class App {
   }
 
   middlewares () {
-    const io = require('socket.io')(this.server)
-
-    io.on('connection', socket => {
+    this.io.on('connection', socket => {
       socket.on('connectOrder', order => {
         socket.join(order)
       })
@@ -58,7 +58,7 @@ class App {
     )
 
     this.express.use((req, res, next) => {
-      req.io = io
+      req.io = this.io
 
       return next()
     })
