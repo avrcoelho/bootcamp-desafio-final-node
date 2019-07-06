@@ -18,6 +18,18 @@ const OrderSchema = new mongoose.Schema(
     observation: {
       type: String
     },
+    postalCode: {
+      type: Number
+    },
+    address: {
+      type: String
+    },
+    number: {
+      type: Number
+    },
+    district: {
+      type: String
+    },
     status: {
       type: Number,
       default: 0
