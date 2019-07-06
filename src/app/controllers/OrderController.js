@@ -2,12 +2,15 @@ const Order = require('../models/Order')
 
 class OrderController {
   async index (req, res) {
+    let user = {}
+
     // verifica se é administrador
-    if (req.userType !== 1) {
-      return res.status(403).json({ error: 'User not permission' })
+    if (req.userType === 2) {
+      user = { customer: req.userId }
     }
 
-    const orders = await Order.find({})
+    const orders = await Order.find(user)
+      .sort('-createdAt')
       .populate('customer', 'name')
       .populate('items.product', 'name')
       .populate('items.type', 'type image')

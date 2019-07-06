@@ -4,31 +4,7 @@ const jwt = require('jsonwebtoken')
 const authConfig = require('../../config/auth')
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  postalCode: {
-    type: Number,
-    required: true
-  },
-  address: {
-    type: String,
-    required: true
-  },
-  number: {
-    type: Number,
-    required: true
-  },
-  district: {
-    type: String,
-    required: true
-  },
-  city: {
-    type: String,
-    required: true
-  },
-  state: {
+  fullname: {
     type: String,
     required: true
   },

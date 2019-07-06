@@ -2,11 +2,6 @@ const Product = require('../models/Product')
 
 class ProductController {
   async index (req, res) {
-    // verifica se é administrador
-    if (req.userType !== 1) {
-      return res.status(403).json({ error: 'User not permission' })
-    }
-
     const products = await Product.paginate(
       {},
       {
@@ -36,8 +31,7 @@ class ProductController {
       })
     }
 
-    const data = await Product.create({ ...req.body,
-      image: req.file.key })
+    const data = await Product.create({ ...req.body, image: req.file.key })
 
     return res.json(data)
   }
