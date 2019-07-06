@@ -4,14 +4,14 @@ class OrderController {
   async index (req, res) {
     let user = {}
 
-    // verifica se é administrador
+    // verifica se é usuario comum
     if (req.userType === 2) {
       user = { customer: req.userId }
     }
 
     const orders = await Order.find(user)
       .sort('-createdAt')
-      .populate('customer', 'name')
+      .populate('customer', 'fullname')
       .populate('items.product', 'name')
       .populate('items.type', 'type image')
       .populate('items.size', 'size')
@@ -23,7 +23,7 @@ class OrderController {
     let order = await Order.create({ ...req.body, customer: req.userId })
 
     order = await Order.findById(order._id)
-      .populate('customer', 'name')
+      .populate('customer', 'fullname')
       .populate('items.product', 'name')
       .populate('items.type', 'type image')
       .populate('items.size', 'size')

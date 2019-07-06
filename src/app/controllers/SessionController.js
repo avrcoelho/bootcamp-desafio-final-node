@@ -21,7 +21,7 @@ class SessionController {
     }
 
     return res.json({
-      name: user.name,
+      name: user.fullname,
       type: user.type,
       token: User.generateToken(user)
     })
