@@ -30,7 +30,7 @@ const TypeSchema = new mongoose.Schema(
 )
 
 TypeSchema.virtual('url').get(function () {
-  const url = process.env.URL || 'http://localhost:3333'
+  const url = process.env.URL || 'http://localhost:3000'
 
   return encodeURIComponent(this.iamge)
     ? `${url}/images/${encodeURIComponent(this.image)}`
